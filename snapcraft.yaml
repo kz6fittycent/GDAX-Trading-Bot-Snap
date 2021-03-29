@@ -1,0 +1,37 @@
+name: gdax-snap
+version: 'git'
+summary: snap for gdax trading bot
+description: |
+    A snap for the GDAX trading bot. 
+
+license: GPL-3.0
+
+assumes: 
+  - command-chain
+base: core18
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+
+apps:
+  gdax-snap:
+    command: bin/node $SNAP/index.js
+    command-chain: 
+      - bin/homeishome-launch    
+    plugs:
+      - network
+      - home
+      - network-bind
+
+parts:
+  gdax-snap:
+    source: https://github.com/Kenshiro-28/GDAX-Trading-Bot
+    source-type: git
+    plugin: nodejs
+
+  homeishome-launch:
+    plugin: nil
+    stage-snaps:
+      - homeishome-launch    
